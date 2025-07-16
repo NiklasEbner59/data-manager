@@ -1,0 +1,7 @@
+{
+  "name": "data-manager",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue-vite"
+}
