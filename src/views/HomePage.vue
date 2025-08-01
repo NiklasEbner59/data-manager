@@ -262,20 +262,24 @@ onMounted(loadDirectory)
 </script>
 
 <style scoped>
-/* Pfadanzeige als Breadcrumb-Leiste */
-.breadcrumb {
-  background-color: var(--ion-color-step-100); /* heller Grauton im Light-Mode, dunkler im Dark-Mode */
-  color: var(--ion-text-color);
-  padding: 8px 12px;
-  margin: 10px 0;
-  border-radius: 6px;
-  font-size: 14px;
-  overflow-x: auto;
-  white-space: nowrap;
-}
+  ion-toolbar {
+      padding-top: 1.25rem;
+    }
 
-/* Abstand für den Zurück-Button */
-.back-button-wrapper {
-  margin: 10px 0 20px;
-}
+  /* Pfadanzeige als Breadcrumb-Leiste */
+  .breadcrumb {
+    background-color: var(--ion-color-step-100); /* heller Grauton im Light-Mode, dunkler im Dark-Mode */
+    color: var(--ion-text-color);
+    padding: 8px 12px;
+    margin: 10px 0;
+    border-radius: 6px;
+    font-size: 14px;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  /* Abstand für den Zurück-Button */
+  .back-button-wrapper {
+    margin: 10px 0 20px;
+  }
 </style>
