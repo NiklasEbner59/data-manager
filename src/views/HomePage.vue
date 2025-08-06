@@ -77,6 +77,8 @@ import { FileOpener } from '@capawesome-team/capacitor-file-opener'
 import { actionSheetController, alertController } from '@ionic/vue'
 import { addOutline, folderOutline, documentOutline, arrowBack, trashOutline } from 'ionicons/icons'
 import { ref, computed, onMounted } from 'vue'
+import { Capacitor } from '@capacitor/core'
+import { EdgeToEdge } from '@capawesome/capacitor-android-edge-to-edge-support'
 
 // Pfad-Speicher: z. B. ['Ordner1', 'Unterordner2']
 const pathStack = ref<string[]>([])
@@ -258,7 +260,18 @@ async function showAddActionSheet() {
   await actionSheet.present()
 }
 
-onMounted(loadDirectory)
+// Edge-to-Edge aktivieren und Verzeichnis laden
+onMounted(async () => {
+  if (Capacitor.getPlatform() === 'android') {
+    try {
+      await EdgeToEdge.enable()
+      console.log('EdgeToEdge aktiviert')
+    } catch (e) {
+      console.warn('EdgeToEdge konnte nicht aktiviert werden:', e)
+    }
+  }
+  loadDirectory()
+})
 </script>
 
 <style scoped>
