@@ -122,39 +122,24 @@ function handleItemClick(item: { name: string; type: 'file' | 'directory' }) {
   }
 }
 
-// In der Funktion openFile kopieren wir die Datei in ein temporäres externes Verzeichnis (Cache),
-// weil andere Apps (z. B. PDF-Viewer) keinen Zugriff auf das interne App-Verzeichnis haben.
 async function openFile(name: string) {
   const internalPath = currentPath.value ? `${currentPath.value}/${name}` : name // Wenn currentPath Value leer ist liegt die Datei im Root und braucht keine Pfad-Angabe
-  const tempPath = `temp-opened-file-${Date.now()}-${name}`
 
-  try {
-    // Datei aus internem Verzeichnis lesen
-    const file = await Filesystem.readFile({
+    try {
+    // Direkt den Content-URI aus dem internen Directory.Data holen
+    const fileUri = await Filesystem.getUri({
       path: internalPath,
       directory: Directory.Data,
-    })
+    });
 
-    // In temporäres extern zugängliches Verzeichnis schreiben
-    await Filesystem.writeFile({
-      path: tempPath,
-      data: file.data,
-      directory: Directory.Cache,
-    })
+    console.log('Öffne Datei direkt:', fileUri.uri);
 
-    // URI für die temporäre Datei holen
-    const fileUri = await Filesystem.getUri({
-      path: tempPath,
-      directory: Directory.Cache,
-    })
-
-    console.log('Öffne Datei von Cache:', fileUri.uri)
-
+    // Datei mit dem FileOpener-Plugin öffnen
     await FileOpener.openFile({
       path: fileUri.uri,
-    })
+    });
   } catch (error) {
-    console.error('Fehler beim Öffnen der Datei:', error)
+    console.error('Fehler beim Öffnen der Datei:', error);
   }
 }
 
